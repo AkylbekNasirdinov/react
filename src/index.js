@@ -7,7 +7,7 @@ import Main from "./pages/Main"
 import News from"./pages/News"
 import Contacts from "./pages/Contacts"
 import AboutUs from "./pages/AboutUs"
-import {BrowserRouter, Routes, Route, Redirect} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import Article from "./components/Article";
 import {configureStore} from "@reduxjs/toolkit";
@@ -15,7 +15,7 @@ import {Provider} from "react-redux";
 
 import newsReducer from "./store"
 import AddNewArticle from "./components/AddNewArticle";
-import App from "./App";
+import ArticleEdition from "./pages/ArticleEdition";
 
 
 const store = configureStore({
@@ -38,6 +38,9 @@ root.render(
                     <Route path="add-post" element={<AddNewArticle/>}/>
                     <Route path = "article" >
                         <Route path=":id" element={<Article/>}/>
+                    </Route>
+                    <Route path="edit-post">
+                        <Route path=":id" element = {<ArticleEdition/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>

@@ -1,11 +1,12 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {deletePost} from "../store";
+import {deletePost, editPost} from "../store";
 import {useDispatch, useSelector} from "react-redux";
 import deleteImg from "../img/delete.svg"
 import editImg from "../img/edited.svg"
 import facebookLogo from "../img/facebook.png";
 import vkLogo from "../img/vk.svg";
 import twitterLogo from "../img/twitter.png";
+import ava from "../img/ava.jpg"
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -16,7 +17,7 @@ export default function Article() {
     const article = posts.find((post) => {
         return post.id == id
     })
-    console.log(article)
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -44,7 +45,7 @@ export default function Article() {
                              borderRadius: '25px',
                              marginLeft: '70px'
                          }}>
-                        <avatar alt="Remy Sharp" src="/img/ava.jpg"/>
+                        <img alt="Remy Sharp" src={ava}/>
                         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0px'}}>
                             <h5 className="card-title">Тони Старк</h5>
                             <p className="card-text">Так просто железный человек</p>
@@ -72,7 +73,10 @@ export default function Article() {
                         </div>
                         <nav className="navbar navbar-light bg-light" style={{marginTop: '30px'}}>
                             <div className="container-fluid">
-                                <button className="navbar-brand" style={{fontSize: '18px'}}>
+                                <button className="navbar-brand" style={{fontSize: '18px'}}
+                                        onClick={() => {
+                                            navigate(`/edit-post/${article.id}`)
+                                        }}>
                                     <img src={editImg} alt="" width="25" height="20"
                                          className="d-inline-block align-text-top"/>
                                     Редактировать пост
@@ -80,11 +84,14 @@ export default function Article() {
                             </div>
                             <div className="container-fluid">
                                 <button onClick={() => {
-                                    dispatch(deletePost({postId: article.id}))
+                                    dispatch(deletePost({
+                                        id: article.id, title: article.title,
+                                        text: article.text, img: article.img
+                                    }))
                                     navigate("/news")
                                 }}
                                         className="navbar-brand" style={{fontSize: '18px'}}
-                                        >
+                                >
                                     <img src={deleteImg} alt="" width="25" height="20"
                                          className="d-inline-block align-text-top"/>
                                     Удалить пост

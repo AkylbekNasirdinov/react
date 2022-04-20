@@ -46,11 +46,21 @@ const newsSlice = createSlice({
         },
         deletePost: (state, action) => {
             state.posts = state.posts.filter((post) => post.id !== action.payload.id)
+        },
+        editPost:(state, action) => {
+            // eslint-disable-next-line array-callback-return
+            state.posts.map((post) =>{
+                if(post.id == action.payload.id){
+                    post.title = action.payload.title;
+                    post.text = action.payload.text;
+                    post.img = action.payload.img;
+                }
+            });
         }
     }
 });
 
-export const {addPost, deletePost} = newsSlice.actions;
+export const {addPost, deletePost,editPost} = newsSlice.actions;
 export default newsSlice.reducer;
 
 
